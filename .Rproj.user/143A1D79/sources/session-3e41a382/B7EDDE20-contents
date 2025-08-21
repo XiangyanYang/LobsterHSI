@@ -54,7 +54,7 @@ SIcurve <- function(surveydata, envVariable, Seasons,int_n){
         SI$SI_value <- (SI$abundance - min(SI$abundance)) / (max(SI$abundance) - min(SI$abundance))
       }
 
-      plot(SI[[1]], SI$SI_value, pch = int_n, main = paste(envVariable[i], Season))
+      #plot(SI[[1]], SI$SI_value, pch = int_n, main = paste(envVariable[i], Season))
 
       si.df.bins[[ paste(envVariable[i], Season, sep="_") ]] <- SI[[1]]
       si.df.SI[[   paste(envVariable[i], Season, sep="_") ]] <- SI$SI_value
