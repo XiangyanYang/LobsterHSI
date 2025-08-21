@@ -34,10 +34,11 @@ pak::pak("XiangyanYang/LobsterHSI")
 This is a basic example which shows you how to use code:
 
 ```{r example}
+devtools::load_all()
 library(LobsterHSI)
 ## basic example code
 data("Lobster_SI_9020")
-data("data/LobsterHSI_mapData.rda")
+data("LobsterHSI_mapData")
 SIData=SIcurve(surveydata = Lobster_SI_9020, 
             envVariable = c("Latitude","Longitude","Depth", "SST"), 
             int_n = 20, 
@@ -80,7 +81,7 @@ example plots:
 
 ```{r pressure, echo = FALSE}
 data("Lobster_SI_9020")
-data("data/LobsterHSI_mapData.rda")
+data("LobsterHSI_mapData")
 plot_SI_curves(surveydata = Lobster_SI_9020,
                      envVariable = c("Latitude","Longitude","Depth", "SST"),
                      int_n = 20, 

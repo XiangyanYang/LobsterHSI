@@ -29,15 +29,11 @@ devtools::load_all()
 library(LobsterHSI)
 ## basic example code
 data("Lobster_SI_9020")
-data("data/LobsterHSI_mapData.rda")
-#> Warning in data("data/LobsterHSI_mapData.rda"): data set
-#> 'data/LobsterHSI_mapData.rda' not found
+data("LobsterHSI_mapData")
 SIData=SIcurve(surveydata = Lobster_SI_9020, 
             envVariable = c("Latitude","Longitude","Depth", "SST"), 
             int_n = 20, 
             Seasons =c("Spring","Fall"))
-#> Loading required package: nlme
-#> This is mgcv 1.9-0. For overview type 'help("mgcv-package")'.
 
 plots=plot_SI_curves(surveydata = Lobster_SI_9020,
                      envVariable = c("Latitude","Longitude","Depth", "SST"),
@@ -70,16 +66,12 @@ HSImap=HSImap(surveydata = Lobster_SI_9020,
         int_n = 20, 
         weights=c(0.25,0.25,0.25,0.25), 
         filename="HSIplot.jpg")
-#> ### Welcome to rworldmap ###
-#> For a short introduction type :   vignette('rworldmap')
 #> [using ordinary kriging]
 #> [using ordinary kriging]
 ```
 
 example plots:
 
-    #> Warning in data("data/LobsterHSI_mapData.rda"): data set
-    #> 'data/LobsterHSI_mapData.rda' not found
     #> png 
     #>   2
     #> [using ordinary kriging]
