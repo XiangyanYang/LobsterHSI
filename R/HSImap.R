@@ -11,6 +11,7 @@
 #' Seasons =c("Spring","Fall"),
 #' int_n = 20,
 #' weights=c(0.25,0.25,0.25,0.25),
+#' locVariable=c("Longitude","Latitude"),
 #' filename="HSIplot.jpg")
 #'
 #' for project users, define months 1-6 as spring, define months 7-12 as fall

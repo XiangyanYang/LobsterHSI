@@ -10,6 +10,7 @@
 #' @param Seasons Character vector of seasons (e.g. "Spring", "Fall").
 #' @param int_n Number of intervals/bins for SI curve.
 #' @param weights Numeric vector of weights for each environmental variable (must sum to 1).
+#' @param locVariable Define location variable used for mapping.
 #'
 #' @return A dataframe containing calculated HSI values.
 #' @export
@@ -22,7 +23,8 @@
 #'   envVariable = c("Latitude","Longitude","Depth","SST"),
 #'   Seasons = c("Spring","Fall"),
 #'   int_n = 20,
-#'   weights = c(0.25,0.25,0.25,0.25)
+#'   weights = c(0.25,0.25,0.25,0.25),
+#'   locVariable=c("Longitude","Latitude")
 #' )
 
 get_HSI <- function(surveydata, MapData, envVariable, Seasons, int_n, weights,locVariable) {
