@@ -25,7 +25,7 @@
 #'   weights = c(0.25,0.25,0.25,0.25)
 #' )
 
-get_HSI <- function(surveydata, MapData, envVariable, Seasons, int_n, weights) {
+get_HSI <- function(surveydata, MapData, envVariable, Seasons, int_n, weights,locVariable) {
 
   SIData=SIcurve(surveydata,
                  envVariable,
@@ -75,7 +75,7 @@ get_HSI <- function(surveydata, MapData, envVariable, Seasons, int_n, weights) {
     na.rm = TRUE
   )
 
-  MapData_out = MapData_out[,c("Season","Latitude", "Longitude", "AMM_HSI")]
+  MapData_out = MapData_out[,c("Season",locVariable[1], locVariable[2], "AMM_HSI")]
 
   return(MapData_out)
 }

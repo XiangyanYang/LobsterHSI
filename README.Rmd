@@ -64,7 +64,8 @@ HSI <- get_HSI(surveydata = Lobster_SI_9020,
                envVariable = c("Latitude","Longitude","Depth", "SST"), 
                int_n = 20, 
                Seasons =c("Spring","Fall"),
-               weights=c(0.25,0.25,0.25,0.25))
+               weights=c(0.25,0.25,0.25,0.25),
+               locVariable = c("Longitude","Latitude"))# lon first
 
 
 
@@ -73,7 +74,8 @@ HSImap=HSImap(surveydata = Lobster_SI_9020,
         envVariable = c("Latitude","Longitude","Depth", "SST"), 
         Seasons =c("Spring","Fall"),
         int_n = 20, 
-        weights=c(0.25,0.25,0.25,0.25), 
+        weights=c(0.25,0.25,0.25,0.25),
+        locVariable = c("Longitude","Latitude"),# lon first
         filename="HSIplot.jpg")
 ```
 
@@ -93,6 +95,7 @@ HSImap(surveydata = Lobster_SI_9020,
         Seasons =c("Spring","Fall"),
         int_n = 20, 
         weights=c(0.25,0.25,0.25,0.25), 
+        locVariable = c("Longitude","Latitude"),# lon first
         filename="HSIplot.jpg")
 ```
 

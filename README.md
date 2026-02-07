@@ -34,6 +34,8 @@ SIData=SIcurve(surveydata = Lobster_SI_9020,
             envVariable = c("Latitude","Longitude","Depth", "SST"), 
             int_n = 20, 
             Seasons =c("Spring","Fall"))
+#> Loading required package: nlme
+#> This is mgcv 1.9-0. For overview type 'help("mgcv-package")'.
 
 plots=plot_SI_curves(surveydata = Lobster_SI_9020,
                      envVariable = c("Latitude","Longitude","Depth", "SST"),
@@ -55,7 +57,8 @@ HSI <- get_HSI(surveydata = Lobster_SI_9020,
                envVariable = c("Latitude","Longitude","Depth", "SST"), 
                int_n = 20, 
                Seasons =c("Spring","Fall"),
-               weights=c(0.25,0.25,0.25,0.25))
+               weights=c(0.25,0.25,0.25,0.25),
+               locVariable = c("Longitude","Latitude"))# lon first
 
 
 
@@ -64,8 +67,11 @@ HSImap=HSImap(surveydata = Lobster_SI_9020,
         envVariable = c("Latitude","Longitude","Depth", "SST"), 
         Seasons =c("Spring","Fall"),
         int_n = 20, 
-        weights=c(0.25,0.25,0.25,0.25), 
+        weights=c(0.25,0.25,0.25,0.25),
+        locVariable = c("Longitude","Latitude"),# lon first
         filename="HSIplot.jpg")
+#> ### Welcome to rworldmap ###
+#> For a short introduction type :   vignette('rworldmap')
 #> [using ordinary kriging]
 #> [using ordinary kriging]
 ```

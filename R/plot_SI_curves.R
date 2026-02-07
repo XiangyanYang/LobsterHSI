@@ -20,24 +20,37 @@ plot_SI_curves <- function(surveydata, envVariable, Seasons,int_n,
   jpeg(filename, res = 600, units = "in", width = 4, height = 3*length(envVariable))
   par(mfrow=c(length(envVariable),1))
 
-  for (var in envVariable){
-    spring_bins <- SIData$Spring$bins[[paste0(var,"_Spring")]]
-    spring_mid  <- get_midpoints(spring_bins)
-    spring_SI   <- SIData$Spring$SI[[paste0(var,"_Spring")]]
+  ###
+  cols <- c("blue", "red", "darkgreen", "orange","purple") #assuming there won't be more than five seasons in someone's data
+  names(cols) <- Seasons
 
-    fall_bins <- SIData$Fall$bins[[paste0(var,"_Fall")]]
-    fall_mid  <- get_midpoints(fall_bins)
-    fall_SI   <- SIData$Fall$SI[[paste0(var,"_Fall")]]
+  for (var in envVariable) {
+    mids_list <- list()
+    SI_list   <- list()
+    # extract all seasons
+    for (s in Seasons) {
+      bins <- SIData[[s]]$bins[[paste0(var, "_", s)]]
+      mids <- get_midpoints(bins)
+      SI   <- SIData[[s]]$SI[[paste0(var, "_", s)]]
 
-    plot(spring_mid, spring_SI, type="l", col="blue", lwd=3,
-         xlab=var, ylab="SI", main=var,
-         ylim=c(0,1),
-         xlim=c(min(c(spring_mid, fall_mid)), max(c(spring_mid, fall_mid))+1.5)
-    )
-    lines(fall_mid, fall_SI, col="red", lwd=3)
+      mids_list[[s]] <- mids
+      SI_list[[s]]   <- SI
+    }
+    # fix x lim
+    all_mid <- unlist(mids_list)
 
-    legend("topright", legend=c("Spring","Fall"), col=c("blue","red"),
-           lwd=3, bty="n")
+    plot(mids_list[[Seasons[1]]], SI_list[[Seasons[1]]],type = "l", col  = cols[Seasons[1]],
+      lwd  = 3,xlab = var,ylab = "SI",main = var,
+      ylim = c(0, 1),
+      xlim = c(min(all_mid), max(all_mid) + 1.5))
+    # other seasons
+    if (length(Seasons) > 1) {
+      for (s in Seasons[-1]) {
+        lines(mids_list[[s]],SI_list[[s]],col = cols[s],lwd = 3)
+      }
+    }
+    #legend
+    legend("topright",legend = Seasons, col    = cols[Seasons],lwd= 3,bty    = "n")
   }
   dev.off()
 }

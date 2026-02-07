@@ -23,9 +23,9 @@
 
 
 
-HSImap <- function(surveydata, MapData, envVariable, Seasons, int_n, weights, filename) {
+HSImap <- function(surveydata, MapData, envVariable, Seasons, int_n, weights,locVariable, filename) {
 
-  HSI = get_HSI(surveydata, MapData,envVariable, Seasons, int_n, weights)
+  HSI = get_HSI(surveydata, MapData,envVariable, Seasons, int_n, weights,locVariable)
 
   library(sp)
   library(gstat)
@@ -40,17 +40,24 @@ HSImap <- function(surveydata, MapData, envVariable, Seasons, int_n, weights, fi
 
   for (Season in Seasons) {
     Map_data <- HSI[HSI$Season == Season, ]
-    ts <- Map_data[,c("Longitude","Latitude","AMM_HSI")]
-    coordinates(ts) = ~Longitude + Latitude
+    ts <- Map_data[, c(locVariable[1], locVariable[2], "AMM_HSI")]
+    # remove na
+    ts <- ts[stats::complete.cases(ts[, c(locVariable[1], locVariable[2], "AMM_HSI")]), ]
+    if (nrow(ts) < 2) {
+      stop("Not enough valid points (after removing NA) to build variogram/grid for this Season.")
+    }
+    coordinates(ts) <- stats::as.formula(paste("~", locVariable[1], "+", locVariable[2]))
 
     auto = autofitVariogram(AMM_HSI ~ 1, ts)
     g = gstat(formula = AMM_HSI ~ 1, model = auto$var_model, data = ts, maxdist = 0.2)
 
-    xrange = range(ts$Longitude)
-    yrange = range(ts$Latitude)
-    grid = expand.grid(Longitude = seq(from = xrange[1], to = xrange[2], by = 0.01),
-                       Latitude = seq(from = yrange[1], to = yrange[2], by = 0.01))
-    gridded(grid) = ~Longitude + Latitude
+    xy <- sp::coordinates(ts)
+    xrange <- range(xy[, 1], na.rm = TRUE)
+    yrange <- range(xy[, 2], na.rm = TRUE)
+    grid <- expand.grid(x = seq(from = xrange[1], to = xrange[2], by = 0.01),
+                        y = seq(from = yrange[1], to = yrange[2], by = 0.01))
+    names(grid) <- c(locVariable[1], locVariable[2])
+    sp::gridded(grid) <- stats::as.formula(paste("~", locVariable[1], "+", locVariable[2]))
 
     p = predict(g, newdata = grid)
     proj4string(p) <- "+proj=longlat"

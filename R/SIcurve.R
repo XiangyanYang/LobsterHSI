@@ -36,6 +36,8 @@ SIcurve <- function(surveydata, envVariable, Seasons,int_n){
         next
       }
 
+      set.seed(1) #reproducibility
+
       envData_int <- classIntervals(envData, int_n, style = "fisher", largeN = nrow(Data_Set))
       envData_int[[2]][1] <- envData_int[[2]][1] - 0.1
 
